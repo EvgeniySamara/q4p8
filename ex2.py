@@ -22,7 +22,7 @@ import csv
 import glob
 import os
 import json
-
+from heapq import merge
 
 
 def find_files(path):
@@ -32,18 +32,24 @@ def find_files(path):
 def read_json(file):
     with open(file,'r') as f:
         jdata = json.load(f)
+        # print(type(jdata))
         return jdata
 
-
+def write_json(data,file = 'all_employees.json.'):
+    with open (file,'w') as f:
+        json.dump(data,f)
 
 
 if __name__=='__main__':
     target_dir = r'C:\Users\User\PycharmProjects\Gbpractic\q4p8'
+    merged_list = []
     if os.path.isdir(target_dir):
         filelist = find_files(target_dir)
         for file in filelist:
-            print(read_json(os.path.join('zad_2',file)))
-
+            # print(read_json(os.path.join('zad_2', file)))
+            # read_json(os.path.join('zad_2', file))
+            merged_list.extend(read_json(os.path.join('zad_2',file)))
+            write_json(merged_list)
     else:
         print('Некорректный каталог')
 
